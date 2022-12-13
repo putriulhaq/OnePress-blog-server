@@ -1,21 +1,20 @@
-const express = require('express');
-const cors = require('cors')
-const app = express()
-const {about} = require('./router')
-const port = 3001;
+const express = require("express");
+require("dotenv").config();
+const app = express();
+const cors = require("cors");
+const connection = require("./models/index");
+const {about} = require("./router")
 
-app.use(cors())
+//database connection
+connection();
+
+//middelwares
 app.use(express.json());
-// const connect = require('./models/index');
+app.use(cors());
 
-// connect();
-
-app.get('/', (req, res) => {
-    res.send('hai guys!');
-});
+const port = process.env.port || 3001;
 
 app.use("/", [about]);
-
 app.listen(port, () => {
-    console.log(port, 'Server is open with port!');
+  console.log(port, "Server is open with port!");
 });
