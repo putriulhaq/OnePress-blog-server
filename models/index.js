@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const connect = () => {
 
-  mongoose.connect('mongodb://localhost:27017/usersdb',
+  mongoose.connect('mongodb+srv://<username>:<password>@scc.3tv5tm0.mongodb.net/?retryWrites=true&w=majority',
     {
       useNewUrlParser: true,
       // useFindAndModify: false,
