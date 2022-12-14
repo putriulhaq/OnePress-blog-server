@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const connect = () => {
 
   mongoose.connect('mongodb://localhost:27017/onepress',
+  // mongoose.connect('mongodb+srv://reyvidod:rRey27AUG03_@scc.3tv5tm0.mongodb.net/?retryWrites=true&w=majority',
     {
       useNewUrlParser: true,
       // useFindAndModify: false,
