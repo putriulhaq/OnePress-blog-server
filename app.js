@@ -3,7 +3,7 @@ require("dotenv").config();
 const app = express();
 const cors = require("cors");
 const connection = require("./models/index");
-const {about} = require("./router")
+const {about, posts} = require("./router")
 
 //database connection
 connection();
@@ -12,9 +12,10 @@ connection();
 app.use(express.json());
 app.use(cors());
 
-const port = process.env.port || 3001;
+const port = 3001;
 
 app.use("/", [about]);
+app.use("/", [posts]);
 app.listen(port, () => {
   console.log(port, "Server is open with port!");
 });
