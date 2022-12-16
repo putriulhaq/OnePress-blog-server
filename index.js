@@ -6,6 +6,7 @@ const app = express();
 const port = 3001;
 const connection = require("./models/index");
 const {about, posts} = require("./router")
+const User = require("./router/users")
 
 //database connection
 connection();
@@ -23,5 +24,3 @@ app.use("/", [posts]);
 app.listen(port, () => {
   console.log(port, "Server is open with port!");
 });
-
-module.exports = connect;

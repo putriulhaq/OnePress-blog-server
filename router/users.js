@@ -49,7 +49,7 @@ Users.post("/register", (req, res) => {
 });
 
 Users.post("/login", (req, res) => {
-    User.findOne({"email":req.body.email
+    User.findOne({"username":req.body.username
     })
     .then(user => {
       if (user) {
