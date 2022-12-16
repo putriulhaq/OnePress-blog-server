@@ -24,3 +24,5 @@ app.use("/", [posts]);
 app.listen(port, () => {
   console.log(port, "Server is open with port!");
 });
+
+// module.exports = connection;
