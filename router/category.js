@@ -4,13 +4,12 @@ const Category = require("../models/Category");
 
 categories.get("/categories", async (req, res) => {
   const dataCategory = await Category.find();
-  const nameCategory = dataCategory.map(data => {
-    return{
-        id: data.id,
-        data: data.name
-    }
-})
-  res.send(nameCategory)
+  const nameCategory = dataCategory.map((data) => {
+    return {
+      id: data.id,
+      data: data.name,
+    };
+  });
 });
 
 categories.post("/category", (req, res) => {
