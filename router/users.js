@@ -58,7 +58,9 @@ Users.post("/login", (req, res) => {
             expiresIn: '1 days',
           });
           res.json({
+            message: `${user.email} login succesfully`,
             name: user.name,
+            username:user.username,
             email: user.email,
             token,
           });
@@ -75,3 +77,4 @@ Users.post("/login", (req, res) => {
 });
 
 module.exports = Users;
+
