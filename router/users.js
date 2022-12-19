@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken");
 const joi = require("joi");
 const bcrypt = require("bcryptjs");
 
-const JWTSECRETKEY = 'onepress';
+const JWTSECRETKEY = "onepress";
 
 const User = require("../models/user");
 Users.use(cors());
@@ -49,18 +49,17 @@ Users.post("/register", (req, res) => {
 });
 
 Users.post("/login", (req, res) => {
-    User.findOne({"username":req.body.username
-    })
-    .then(user => {
+  User.findOne({ username: req.body.username })
+    .then((user) => {
       if (user) {
         if (bcrypt.compareSync(req.body.password, user.password)) {
-            const token = jwt.sign({ userId: user.userId }, JWTSECRETKEY, {
-            expiresIn: '1 days',
+          const token = jwt.sign({ userId: user.userId }, JWTSECRETKEY, {
+            expiresIn: "1 days",
           });
           res.json({
             message: `${user.email} login succesfully`,
             name: user.name,
-            username:user.username,
+            username: user.username,
             email: user.email,
             token,
           });
@@ -76,5 +75,49 @@ Users.post("/login", (req, res) => {
     });
 });
 
-module.exports = Users;
+Users.put("/profil/edit/:id", async (req, res) => {
+  const { id } = req.params;
+  const myquery = { userId: id };
+  const updateData = {
+    $set: {
+      name: req.body.name,
+      email: req.body.email,
+      username: req.body.username,
+      about: req.body.about,
+      image: req.body.image,
+    },
+  };
+  const data = await User.updateOne(
+    myquery,
+    updateData,
+    function (err, result) {
+      if (err) {
+        console.log(err);
+        console.log(err);
+      } else {
+        console.log(result);
+      }
+    }
+  );
+  return res.status(200).send({
+    message: "Your Profil has been edited",
+  });
+});
 
+Users.get("/profil/:Id", async (req, res) => {
+  const {Id} = req.params;
+  const dataProfil = await User.find({userId:Id})
+  // console.log(dataProfil)
+  const data = dataProfil.map(data => {
+    return {
+      name:data.name,
+      email:data.email,
+      username:data.username,
+      about: data.about,
+      image:data.image
+    }
+  })
+  res.json(data)
+})
+
+module.exports = Users;
