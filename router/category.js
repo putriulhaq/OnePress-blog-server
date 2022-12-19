@@ -2,7 +2,7 @@ const express = require("express");
 const categories = express.Router();
 const Category = require("../models/Category");
 
-categories.get("/categories", async (req, res) => {
+categories.get("/categories/post", async (req, res) => {
   const dataCategory = await Category.find();
   const nameCategory = dataCategory.map((data) => {
     return {
