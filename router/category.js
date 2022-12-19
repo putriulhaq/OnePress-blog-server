@@ -10,6 +10,7 @@ categories.get("/categories", async (req, res) => {
       data: data.name,
     };
   });
+  res.send(nameCategory)
 });
 
 categories.post("/category", (req, res) => {
