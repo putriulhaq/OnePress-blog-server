@@ -7,6 +7,7 @@ const port = 3001;
 const connection = require("./models/index");
 const {about, posts} = require("./router")
 const User = require("./router/users")
+const category = require("./router/category")
 
 //database connection
 connection();
@@ -21,6 +22,7 @@ app.use('/user', User)
 
 app.use("/", [about]);
 app.use("/", [posts]);
+app.use("/", [category]);
 app.listen(port, () => {
   console.log(port, "Server is open with port!");
 });
