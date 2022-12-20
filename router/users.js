@@ -61,6 +61,7 @@ Users.post("/login", (req, res) => {
             name: user.name,
             username: user.username,
             email: user.email,
+            userId: user.userId,
             token,
           });
         } else {
