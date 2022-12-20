@@ -2,46 +2,52 @@ const express = require("express");
 const router = express.Router();
 const Posts = require("../models/Post");
 
-router.get("/posts", (req, res) => {
-  res.send([
-    {
-      categories: "Painting",
-      createdAt: "14-12-2022",
-      desc: "this is what are we now",
-      title: "Expressionism",
-      updatedAt: "14/12/2022",
-      username: "reyvido",
-      image:
-        "https://images.pexels.com/photos/311458/pexels-photo-311458.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-      __v: 0,
-      _id: "im28uywp",
-    },
-    {
-      categories: "Sculpture",
-      createdAt: "12-12-2022",
-      desc: "this is who are we now",
-      title: "Valk",
-      updatedAt: "14/12/2022",
-      username: "reyvido",
-      image:
-        "https://images.pexels.com/photos/311458/pexels-photo-311458.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-      __v: 0,
-      _id: "im28uywp",
-    },
-    {
-      categories: "Fashion",
-      createdAt: "10-12-2022",
-      desc: "this is where are we now",
-      title: "Haute Couture",
-      updatedAt: "14/12/2022",
-      username: "reyvido",
-      image:
-        "https://images.pexels.com/photos/311458/pexels-photo-311458.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-      __v: 0,
-      _id: "im28uywp",
-    },
-  ]);
+router.get("/posts/", async (req, res) => {
+  const username = req.query.user;
+  const catName = req.query.cat;
+  try {
+    let posts;
+    if (username) {
+      posts = await Posts.find({ username });
+    } else if (catName) {
+      posts = await Posts.find({
+        categories: {
+          $in: [catName],
+        },
+      });
+    } else {
+      posts = await Post.find();
+    }
+    res.status(200).json(posts);
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
+
+router.put("/posts/:id", async (req, res) => {
+  try {
+    const post = await Posts.findById(req.params.id);
+    if (post.username === req.body.username) {
+      try {
+        const updatedPost = await Posts.findByIdAndUpdate(
+          req.params.id,
+          {
+            $set: req.body,
+          },
+          { new: true }
+        );
+        res.status(200).json(updatedPost);
+      } catch (err) {
+        res.status(500).json(err);
+      }
+    } else {
+      res.status(401).json("You can update only your post!");
+    }
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 
 router.delete("/posts/delete/:postId", (req, res) => {
   const { postId } = req.params;
