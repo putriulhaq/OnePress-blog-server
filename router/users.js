@@ -94,12 +94,11 @@ Users.put("/profil/edit/:id", async (req, res) => {
     function (err, result) {
       if (err) {
         console.log(err);
-        console.log(err);
       } else {
         console.log(result);
       }
     }
-  );
+  ).clone();
   return res.status(200).send({
     message: "Your Profil has been edited",
   });
