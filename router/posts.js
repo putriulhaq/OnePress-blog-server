@@ -46,6 +46,16 @@ router.get("/posts/", async (req, res) => {
   }
 });
 
+router.get("/posts/:id", async (req, res) => {
+  try {
+    let posts;
+    posts = await Posts.findById(req.params.id);
+    res.status(200).json(posts);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 router.put("/posts/:id", async (req, res) => {
   try {
     const post = await Posts.findById(req.params.id);
