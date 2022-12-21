@@ -2,6 +2,10 @@ const express = require("express");
 const router = express.Router();
 const Posts = require("../models/Post");
 
+router.get("/", async (req, res) => {
+  res.status(200).json("Welcome to OnePress API.");
+});
+
 router.get("/search", async (req, res) => {
   const query = req.query.q;
   try {
@@ -49,7 +53,7 @@ router.get("/posts/", async (req, res) => {
 router.get("/posts/latest", async (req, res) => {
   try {
     let posts;
-    posts = await Posts.find().sort({"createdAt" : -1}).limit(1);
+    posts = await Posts.find().sort({ "createdAt": -1 }).limit(1);
     res.status(200).json(posts);
   } catch (err) {
     res.status(500).json(err);
