@@ -2,6 +2,18 @@ const express = require("express");
 const router = express.Router();
 const Posts = require("../models/Post");
 
+router.get("/search", async (req, res) => {
+  const query = req.query.q;
+  try {
+    const postsWithQuery = await Posts.find({
+      title: { $regex: query, $options: "i" },
+    });
+    res.status(200).json(postsWithQuery);
+  } catch (error) {
+    console.log(error);
+  }
+});
+
 router.get("/posts/", async (req, res) => {
   const username = req.query.user;
   const catName = req.query.cat;
