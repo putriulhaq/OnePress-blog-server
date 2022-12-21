@@ -46,6 +46,16 @@ router.get("/posts/", async (req, res) => {
   }
 });
 
+router.get("/posts/latest", async (req, res) => {
+  try {
+    let posts;
+    posts = await Posts.find().sort({"createdAt" : -1}).limit(1);
+    res.status(200).json(posts);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 router.get("/posts/:id", async (req, res) => {
   try {
     let posts;
