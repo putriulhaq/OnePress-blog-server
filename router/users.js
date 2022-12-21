@@ -99,22 +99,20 @@ Users.put("/profil/edit/:id", async (req, res) => {
       }
     }
   ).clone();
-  return res.status(200).send({
-    message: "Your Profil has been edited",
-  });
+  return res.status(200).json(updateData.$set);
 });
 
 Users.get("/profil/:Id", async (req, res) => {
-  const {Id} = req.params;
-  const dataProfil = await User.find({userId:Id})
+  const { Id } = req.params;
+  const dataProfil = await User.find({ userId: Id })
   // console.log(dataProfil)
   const data = dataProfil.map(data => {
     return {
-      name:data.name,
-      email:data.email,
-      username:data.username,
+      name: data.name,
+      email: data.email,
+      username: data.username,
       about: data.about,
-      image:data.image
+      image: data.image
     }
   })
   res.json(data)
